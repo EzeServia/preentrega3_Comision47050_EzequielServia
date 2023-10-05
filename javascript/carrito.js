@@ -4,7 +4,7 @@ class Producto {
     this.id = id;
     this.nombre = nombre;
     this.precio = precio;
-    this.categoria = gramaje;
+    this.gramaje = gramaje;
     this.imagen = imagen;
   }
 } // Clase para que simula la base de datos del e-commerce, acá van a estar
@@ -14,8 +14,8 @@ class BaseDeDatos {
     // Array para el catálogo
     this.productos = [];
     // Empezar a cargar productos
-    this.agregarStock(110, "Rosa Barbie", 2500, 20, "rosaBarbie10.webp");
-    this.agregarStock(240, "Violeta", 2500, 40, "violeta40.webp");
+    this.agregarStock(110, "Rosa Barbie", 2500, 20, "rosababy.webp");
+    this.agregarStock(240, "Violeta", 2500, 40, "violeta402.webp");
     this.agregarStock(340, "Rojo ", 2500, 40, "rojo40.webp");
     this.agregarStock(480, "Verde Esmeralda", 2500, 80, "verde80.webp");
     this.agregarStock(510, "Azul", 2500, 10, "azul10.webp");
@@ -112,20 +112,16 @@ class Carrito {
     for (const producto of this.carrito) {
       divCarrito.innerHTML += `
 
-      <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasBottomLabel">Carrito Brilloso</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body small">
-        <div class="productoCarrito">
-            <h2>${producto.nombre}</h2>
+      
+        
+        <div class="productoCarrito ">
+            <h3>${producto.nombre}</h3>
             <p>$${producto.precio}</p>
             <p>Cantidad: ${producto.cantidad}</p>
             <a href="#" class="btnQuitar" data-id="${producto.id}">Quitar del carrito</a>
           </div>
-        </div>
-      </div>
+        
+      
         
         `;
       // Actualizamos los totales
@@ -161,8 +157,8 @@ const spanTotalCarrito = document.querySelector("#totalCarrito");
 const divProductos = document.querySelector("#productos");
 const divCarrito = document.querySelector("#carrito");
 const inputBuscar = document.querySelector("#inputBuscar");
-const botonCarrito = document.querySelector("section button");
-
+const botonCarrito = document.querySelector("section h2");
+const botonComprar = document.querySelector("#botonComprar");
 // Instaciamos la clase Carrito
 const carrito = new Carrito();
 
@@ -180,7 +176,7 @@ function cargarProductos(productos) {
     <div class="card-body">
       <h5 class="card-title">${producto.nombre}</h5>
       <p class="card-text">$${producto.precio}</p>
-      <p class="card-text">Gramaje: ${producto.gramaje}MIC</p>
+      <p class="card-text">${producto.gramaje}MIC</p>
       <a href="#" class="btnAgregar btn btn-primary" data-id="${producto.id}">Agregar al Carrito</a>
     </div>
   </div>
@@ -217,4 +213,16 @@ inputBuscar.addEventListener("input", (event) => {
 // Toggle para ocultar/mostrar el carrito
 botonCarrito.addEventListener("click", (event) => {
   document.querySelector("section").classList.toggle("ocultar");
+});
+//boton comprar
+botonComprar.addEventListener("click", (event) => {
+  event.preventDefault();
+
+  Swal.fire({
+    position: "top-start",
+    icon: "success",
+    title: "Su compra ah sido REALIZADA!",
+    showConfirmButton: false,
+    timer: 1500,
+  });
 });
