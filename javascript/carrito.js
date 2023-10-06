@@ -7,6 +7,15 @@ class Producto {
     this.gramaje = gramaje;
     this.imagen = imagen;
   }
+}
+class gemas {
+  constructor(id, nombre, precio, forma, imagen) {
+    this.id = id;
+    this.nombre = nombre;
+    this.precio = precio;
+    this.forma = forma;
+    this.imagen = imagen;
+  }
 } // Clase para que simula la base de datos del e-commerce, acá van a estar
 // todos los productos de nuestro catálogo
 class BaseDeDatos {
@@ -48,6 +57,7 @@ class BaseDeDatos {
     );
   }
 }
+
 // Clase carrito que nos sirve para manipular los productos de nuestro carrito
 class Carrito {
   constructor() {
@@ -86,8 +96,8 @@ class Carrito {
 
   // Quitar del carrito
   quitar(id) {
-    // Obento el índice de un producto según el ID, porque el
-    // método splice requiere el índice
+    // Recorremos todos los indices del Array carrito, si encuentra un producto del carrito
+    // que tenga un ID igual al que recibe, lo elimina mediante un splice.
     const indice = this.carrito.findIndex((producto) => producto.id === id);
     // Si la cantidad es mayor a 1, le resto la cantidad en 1
     if (this.carrito[indice].cantidad > 1) {
@@ -115,19 +125,27 @@ class Carrito {
       
         
         <div class="productoCarrito ">
+        
             <h3>${producto.nombre}</h3>
             <p>$${producto.precio}</p>
-            <p>Cantidad: ${producto.cantidad}</p>
-            <a href="#" class="btnQuitar" data-id="${producto.id}">Quitar del carrito</a>
+            <img class="flext" src="./imagenes/tarjeta.png"><p class="fuente flext margin10" >Llevalo en 3 cuotas sin interés de $${(
+              producto.precio / 3
+            ).toFixed(2)}</p>
+            <p>Cantidad: ${producto.cantidad}            
+            <a  href="#" class="btnQuitar" data-id="${
+              producto.id
+            }">Quitar del carrito</a>
           </div>
         
       
         
         `;
+
       // Actualizamos los totales
       this.total += producto.precio * producto.cantidad;
       this.cantidadProductos += producto.cantidad;
     }
+
     // Como no se cuantos productos tengo en el carrito, debo
     // asignarle los eventos de forma dinámica a cada uno
     // Primero hago una lista de todos los botones con .querySelectorAll
@@ -147,7 +165,6 @@ class Carrito {
     spanTotalCarrito.innerText = this.total;
   }
 }
-
 // Instanciamos la base de datos
 const bd = new BaseDeDatos();
 
@@ -159,6 +176,7 @@ const divCarrito = document.querySelector("#carrito");
 const inputBuscar = document.querySelector("#inputBuscar");
 const botonCarrito = document.querySelector("section h2");
 const botonComprar = document.querySelector("#botonComprar");
+
 // Instaciamos la clase Carrito
 const carrito = new Carrito();
 
@@ -226,3 +244,4 @@ botonComprar.addEventListener("click", (event) => {
     timer: 1500,
   });
 });
+//boton para agregar cantidad de productos
